@@ -7,11 +7,8 @@ A processing suite to analyze depth-dependent strains by fractional area and sta
   - binary mask: "msk" = <n pixels> x <m pixels> x <number of slices>
  
 2) Open DepthFraction_MS.m
-  Alter the %% LOAD STRAINS main loop to load your strain maps
-  Currently all strain maps must be the exact same size
-  
-  Alter the script parameters to your needs
-  
-  Alter statistical tests to your needs
+  - Alter the %% LOAD STRAINS main loop to load your strain maps (currently all strain maps must be the exact same size)
+  - Alter the script parameters to your needs
+  - Alter statistical tests to your needs
   
 3) Run DepthFraction_MS.m
