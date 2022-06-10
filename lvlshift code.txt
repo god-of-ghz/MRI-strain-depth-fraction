@@ -1,0 +1,23 @@
+    % columnar adjustment, since often the images are not perfectly square
+    % need to draw a 'line' from each level in the top row to the bottom row
+    lvl_diff = t_levels - b_levels;         % subtract the two to obtain the left/right shift necessary per point pair
+    lvl_shift = NaN(height, n_cols - 1);    % the values for the shifted threshold levels (the 'line' being drawn)
+    
+    lvl_shift(1, :) = t_levels(:);          % assign the first and last values as their respective top and bottom rows
+    lvl_shift(end, :) = b_levels(:);
+    
+    for i = 1:n_cols-1                      % for each column
+        % determine the shifting pattern
+        % e.g. first 6 pixels are not shifted, next 5 are shifted 1, next 6
+        % are shifted 2, etc, until the total shift is reached
+        % +1 to the difference because first and last set 'match' the final pixel 
+        row_shift = DivideUp(height, abs(lvl_diff(i))+1,'even');     
+        
+        lvl_ind = 1;                        
+        for j = 1:max(size(row_shift))
+            start = lvl_ind;                        % where to start the current amount of shifting
+            finish = lvl_ind+row_shift(j)-1;        % where to end it
+            lvl_shift(start:finish,i) = t_levels(i) - ((j - 1)*sign(lvl_diff(i)));   % perform the calculation
+            lvl_ind = lvl_ind + row_shift(j);       % iterate to the next set of rows
+        end
+    end
